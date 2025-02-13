@@ -26,10 +26,10 @@ router.get('/:id' , async(req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const { title, description, completed, userId } = req.body;
+    const { title, description, status, userId } = req.body;
     try {
         const newTask = await prisma.task.create({
-            data: { title, description, completed, userId },
+            data: { title, description, status, userId },
         });
         res.status(201).json(newTask);
     } catch (error) {
@@ -39,11 +39,11 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { title, description, completed } = req.body;
+  const { title, description, status, projectId } = req.body;
   try {
     const updatedTask = await prisma.task.update({
       where: { id: Number(id) },
-      data: { title, description, completed },
+      data: { title, description, status, projectId },
     });
     res.json(updatedTask);
   } catch (error) {
