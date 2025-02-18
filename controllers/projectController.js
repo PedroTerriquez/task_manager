@@ -1,4 +1,5 @@
-const { PrismaClient } = require('@prisma/client')
+const { PrismaClient } = require('@prisma/client');
+const { getIO } = require('../socket_io_server');
 const prisma = new PrismaClient;
 
 const all = async (req, res) => {
@@ -31,8 +32,11 @@ const create = async (req, res) => {
     const newProject = await prisma.project.create({
       data: { name, description, userId },
     });
+    const io = getIO();
+    io.emit('projectCreated', newProject)
     res.status(201).json(newProject);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: "Error creating the project", details: error });
   }
 };
