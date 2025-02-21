@@ -2,8 +2,9 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient;
 
 const all = async(req,res) => {
+    const {projectId} = req.params;
     try {
-        const tasks = await prisma.task.findMany();
+        const tasks = await prisma.task.findMany({where: { projectId: Number(projectId)}});
         if (!tasks) return res.status(404).json({error: 'No tasks yet'});
         res.json(tasks);
     } catch (error) {
@@ -23,13 +24,17 @@ const getById = async(req, res) => {
 };
 
 const create = async (req, res) => {
-    const { title, description, status, userId } = req.body;
+    const userId = req.user.id;
+    const { title, description, projectId } = req.body;
     try {
+      console.log('before')
         const newTask = await prisma.task.create({
-            data: { title, description, status, userId },
+            data: { title, description, userId, projectId },
         });
+      console.log('after')
         res.status(201).json(newTask);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: "Error creating the task", details: error});
     }
 };

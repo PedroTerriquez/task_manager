@@ -20,10 +20,10 @@ const login = async(req, res) => {
     const { email, password } = req.body;
     try {
         const user = await prisma.user.findUnique({where: {email}});
-        if (!user) return res.status(401).json({ message: "Usuario no encontrado" });
+        if (!user) return res.status(401).json({ message: "User not found" });
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch) return res.status(401).json({ message: "Contraseña incorrecta" });
+        if(!isMatch) return res.status(401).json({ message: "Wrong password" });
 
         const token = jwt.sign(
             { id: user.id, name: user.name },
@@ -31,8 +31,7 @@ const login = async(req, res) => {
             process.env.NODE_ENV === "dev" ? {} : { expiresIn: "1h" }
         );
         
-        res.status(201).json({token})
-
+        res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'strict'}).json({token})
     } catch (error) {
         res.status(500).json({ error: 'Login error', detail: error});
     }
