@@ -36,7 +36,7 @@ export function ProjectShow() {
             <h1>{state?.name}</h1>
             <h3>{state?.description}</h3>
             <button onClick={() => navigate("tasks/new")}>Add Task</button>
-            <button onClick={() => navigate("/")}>Cancel</button>
+            <button onClick={() => navigate(-1)}>Go back</button>
             <ul>
                 {
                     data ? ( data?.map(project => (

@@ -10,7 +10,14 @@ const singup = async (req, res) => {
         const newUser = await prisma.user.create({
             data: { name, email, password: hashedPassword },
         });
-        res.status(201).json(newUser);
+
+        const token = jwt.sign(
+            { id: newUser.id, name: newUser.name },
+            process.env.JWT_SECRET,
+            process.env.NODE_ENV === "dev" ? {} : { expiresIn: "1h" }
+        );
+
+        res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'strict'}).json({token})
     } catch (error) {
         res.status(500).json({ error: 'Singup error', detail: error});
     }
