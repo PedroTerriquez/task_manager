@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { TaskCard } from "./TaskCard";
+import { useNotification } from "../NotificationProvider";
+
+import { io } from "socket.io-client";
+const socket = io("http://localhost:3000"); 
+
 
 export function ProjectShow() {
     const [data, setData ] = useState(null)
@@ -10,6 +15,18 @@ export function ProjectShow() {
     const navigate = useNavigate();
     const location = useLocation();
     const { state } = location;
+    const { addNotification } = useNotification();
+
+    useEffect(() => {
+        socket.on("newTask", (newTask) => {
+          console.log('New task created', newTask);
+          addNotification('New task created');
+        });
+
+        return () => {
+            socket.off("taskCreated");
+        };
+    }, []);
 
     useEffect(() => {
         const fetchTasks = async () => {
