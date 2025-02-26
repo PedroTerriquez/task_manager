@@ -5,13 +5,15 @@ import { TaskNew } from "./components/TaskNew";
 import { ProjectShow } from "./components/ProjectShow";
 import { TaskShow } from "./components/TaskShow";
 import { NotFound } from "./components/NotFound";
-import { NotificationProvider } from "./NotificationProvider";
+import { LayoutProvider } from "./LayoutProvider";
+import { Signup } from "./components/Signup";
+import { Login } from "./components/Login";
 
 
 function App() {
   return (
-    <NotificationProvider>
-      <Router>
+    <Router>
+      <LayoutProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" >
@@ -22,10 +24,12 @@ function App() {
               <Route path=":id" element={<TaskShow />} />
             </Route>
           </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>
-    </NotificationProvider>
+      </LayoutProvider>
+    </Router>
   );
 }
 

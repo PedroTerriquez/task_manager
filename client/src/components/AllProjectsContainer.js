@@ -26,14 +26,16 @@ export function AllProjectsContainer() {
 
     return (
         <>
-            <h1 className="text-2xl font-bold mb-4">Your projects</h1>
-            <button
-                onClick={() => navigate("/projects/new")}
-                className="px-4 py-2 mb-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-            >
-                Add Project
-            </button>
-            <ul>
+            <div className='flex py-10 px-5 justify-between'>
+                <h1 className="text-6xl font-bold mb-4 text-center">Your projects</h1>
+                <button
+                    onClick={() => navigate("/projects/new")}
+                    className="px-4 py-2 mb-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                >
+                    Add Project
+                </button>
+            </div>
+           <ul>
                 {
                     data ? ( data?.map(project => (
                         <ProjectCard key={project.id} project={project} />
