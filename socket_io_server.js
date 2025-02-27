@@ -8,14 +8,6 @@ function initSocketServer(httpServer) {
     io.on('connection', (socket) => {
         console.log('A user connected');
 
-        socket.on('taskCreated', (task) => {
-            console.log('Task Created:', task);
-        });
-
-        socket.on('projectCreated', (task) => {
-            console.log('Project Created:', task);
-        });
-
         socket.on('disconnect', () => {
             console.log('A user disconnected');
         })

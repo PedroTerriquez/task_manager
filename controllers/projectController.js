@@ -58,11 +58,13 @@ const update = async (req, res) => {
 
 const destroy = async (req, res) => {
   const { id } = req.params;
+  const userId = req.user.id;
   try {
     await prisma.project.delete({ where: { id: Number(id), userId: userId } });
     res.json({ message: "Project deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Error deleting the project" });
+    console.log(error)
+    res.status(500).json({ error: "Error deleting the project", details: error });
   }
 };
 

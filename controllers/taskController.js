@@ -1,5 +1,6 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient;
+const { getIO } = require('../socket_io_server');
 
 const all = async(req,res) => {
     const {projectId} = req.params;
@@ -27,11 +28,11 @@ const create = async (req, res) => {
     const userId = req.user.id;
     const { title, description, projectId } = req.body;
     try {
-      console.log('before')
         const newTask = await prisma.task.create({
             data: { title, description, userId, projectId },
         });
-      console.log('after')
+        const io = getIO();
+        io.emit('newTask', newTask);
         res.status(201).json(newTask);
     } catch (error) {
         console.log(error)
@@ -49,7 +50,8 @@ const update = async (req, res) => {
     });
     res.json(updatedTask);
   } catch (error) {
-    res.status(500).json({ error: "Error updating the task" });
+    console.log(error);
+    res.status(500).json({ error: "Error updating the task", details: error });
   }
 };
 
