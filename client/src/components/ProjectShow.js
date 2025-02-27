@@ -5,7 +5,12 @@ import { useLocation } from "react-router-dom";
 import { TaskCard } from "./TaskCard";
 
 export function ProjectShow() {
-    const [data, setData ] = useState(null);
+    const [tasksByStatus, setTasksByStatus] = useState({
+        "todo": [],
+        "inprogress": [],
+        "inreview": [],
+        "done": []
+    });
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -22,7 +27,13 @@ export function ProjectShow() {
                     credentials: "include"
                 });
                 const result = await response.json();
-                setData(result);
+                const groupedTasks = {
+                    "todo": result.filter((task) => task.status === 1 || task.status === ""),
+                    "inprogress": result.filter((task) => task.status === 2),
+                    "inreview": result.filter((task) => task.status === 3),
+                    "done": result.filter((task) => task.status === 4)
+                }
+                setTasksByStatus(groupedTasks);
             } catch (err) {
                 alert(err);
             } finally {
@@ -79,15 +90,48 @@ export function ProjectShow() {
                     <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
                 </div>
             ) : (
-                <ul className="space-y-4 width-full">
-                    {data ? (
-                        data.map((project) => (
-                            <TaskCard key={project.id} task={project} />
-                        ))
-                    ) : (
-                        <h1 className="text-center">No data</h1>
-                    )}
-                </ul>
+                <div className='flex gap-9'>
+                    <ul className="space-y-4 width-full bg-gray-300 p-4 rounded">
+                        <h1 className="text-center">TODO {tasksByStatus['todo'].length}</h1>
+                        {tasksByStatus['todo'] ? (
+                            tasksByStatus['todo'].map((task) => (
+                                <TaskCard key={task.id} task={task} />
+                            ))
+                        ) : (
+                            <h1 className="text-center">No data</h1>
+                        )}
+                    </ul>
+                    <ul className="space-y-4 width-full bg-gray-300 p-4 rounded">
+                        <h1 className="text-center">In Progress {tasksByStatus['inprogress'].length}</h1>
+                        {tasksByStatus['inprogress'] ? (
+                            tasksByStatus['inprogress'].map((task) => (
+                                <TaskCard key={task.id} task={task} />
+                            ))
+                        ) : (
+                            <h1 className="text-center">No data</h1>
+                        )}
+                    </ul>
+                    <ul className="space-y-4 width-full bg-gray-300 p-4 rounded">
+                        <h1 className="text-center">In Review {tasksByStatus['inreview'].length}</h1>
+                        {tasksByStatus['inreview'] ? (
+                            tasksByStatus['inreview'].map((task) => (
+                                <TaskCard key={task.id} task={task} />
+                            ))
+                        ) : (
+                            <h1 className="text-center">No data</h1>
+                        )}
+                    </ul>
+                    <ul className="space-y-4 width-full bg-gray-300 p-4 rounded">
+                        <h1 className="text-center">DONE {tasksByStatus['done'].length}</h1>
+                        {tasksByStatus['done'] ? (
+                            tasksByStatus['done'].map((task) => (
+                                <TaskCard key={task.id} task={task} />
+                            ))
+                        ) : (
+                            <h1 className="text-center">No data</h1>
+                        )}
+                    </ul>
+                </div>
             )}
         </div>
     );
