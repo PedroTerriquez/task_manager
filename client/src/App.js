@@ -9,7 +9,6 @@ import { LayoutProvider } from "./LayoutProvider";
 import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
 
-
 function App() {
   return (
     <Router>

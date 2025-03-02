@@ -21,16 +21,22 @@ export function LayoutProvider({ children }) {
 
     useEffect(() => {
         socket.on("newTask", (newTask) => {
+            console.log(newTask);
           addNotification('New task created');
         });
 
+        socket.on("updateTask", (newTask) => {
+          addNotification('A task was updated');
+        });
+
         return () => {
-            socket.off("taskCreated");
+            socket.off("newTask");
+            socket.off("updateTask");
         };
     }, []);
 
     return (
-        <LayoutContext.Provider value={{ addNotification }}>
+        <LayoutContext.Provider value={{ addNotification, socket }}>
             <div className="relative">
                 {isLoggedIn && (
                     <header className="flex justify-between items-center p-4 bg-blue-500 text-white">

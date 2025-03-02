@@ -48,6 +48,8 @@ const update = async (req, res) => {
       where: { id: Number(id) },
       data: { title, description, status, projectId },
     });
+    const io = getIO();
+    io.emit('updateTask', updatedTask);
     res.json(updatedTask);
   } catch (error) {
     console.log(error);
