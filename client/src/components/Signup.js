@@ -25,7 +25,8 @@ export function Signup() {
             if (!response.ok) {
                 throw new Error("Signup failed");
             }
-
+            const data = await response.json();
+            setName(data.name);
             navigate('/');
             setLogin();
         } catch (err) {
