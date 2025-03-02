@@ -17,7 +17,7 @@ const singup = async (req, res) => {
             process.env.NODE_ENV === "dev" ? {} : { expiresIn: "1h" }
         );
 
-        res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'strict'}).json({token})
+        res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'strict'}).json({name: newUser.name})
     } catch (error) {
         res.status(500).json({ error: 'Singup error', detail: error});
     }
@@ -38,8 +38,9 @@ const login = async(req, res) => {
             process.env.NODE_ENV === "dev" ? {} : { expiresIn: "1h" }
         );
         
-        res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'strict'}).json({token})
+        res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'strict'}).json({name: user.name})
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: 'Login error', detail: error});
     }
 };

@@ -8,8 +8,9 @@ const LayoutContext = createContext();
 
 export function LayoutProvider({ children }) {
     const [notifications, setNotifications] = useState([]);
-    const { isLoggedIn, setLogout } = useAuthStore();
+    const { isLoggedIn, setLogout, name } = useAuthStore();
     const navigate = useNavigate();
+    console.log('isLoggedIn', isLoggedIn);
 
     const addNotification = (message) => {
         setNotifications((prev) => [...prev, message]);
@@ -41,12 +42,15 @@ export function LayoutProvider({ children }) {
                 {isLoggedIn && (
                     <header className="flex justify-between items-center p-4 bg-blue-500 text-white">
                         <h1 onClick={ () => navigate('/') } className="text-xl font-bold">Task Manager</h1>
-                        <button
-                            onClick={setLogout}
-                            className="px-4 py-2 bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:bg-red-600"
-                        >
-                            Logout
-                        </button>
+                        <div>
+                            <span>Hola, <strong>{name}</strong> </span>
+                            <button
+                                onClick={setLogout}
+                                className="px-4 py-2 bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:bg-red-600"
+                            >
+                                Logout
+                            </button>
+                        </div>
                     </header>
                 )}
                 {children}

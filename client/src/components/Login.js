@@ -6,7 +6,7 @@ export function Login() {
     const [email, setEmail] = useState('user@email.com');
     const [password, setPassword] = useState("root");
     const [error, setError] = useState("");
-    const { setLogin, setLogout } = useAuthStore();
+    const { setLogin, setLogout, setName } = useAuthStore();
     const navigate = useNavigate();
 
     const handleSubmit = async(e) => {
@@ -26,6 +26,8 @@ export function Login() {
                 throw new Error("Invalid email or password");
             }
 
+            const data = await response.json();
+            setName(data.name);
             setLogin();
             navigate('/');
         } catch (err) {
