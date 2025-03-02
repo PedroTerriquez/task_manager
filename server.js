@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const taskRoutes = require('./routes/taskRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use('/tasks', taskRoutes);
 app.use('/projects', projectRoutes);
 app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 
 httpServer.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

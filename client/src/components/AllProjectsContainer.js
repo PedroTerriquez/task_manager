@@ -35,13 +35,13 @@ export function AllProjectsContainer() {
                     Add Project
                 </button>
             </div>
-           <ul>
+           <div className='grid grid-cols-2 gap-5'>
                 {
                     data ? ( data?.map(project => (
                         <ProjectCard key={project.id} project={project} />
                     ))) : (<h1>No data</h1>) 
                 }
-            </ul>
+            </div>
         </>
     )
 }

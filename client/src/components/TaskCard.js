@@ -31,7 +31,7 @@ export function TaskCard({ task }) {
         <div
         >
           <h1 className="text-xl font-bold text-gray-900">{task.title}</h1>
-          <h3 className="text-gray-700 mt-2">{task.description}</h3>
+          <h3 className="text-gray-700 mt-2">Description: {task.description}</h3>
           <p className={`text-sm mt-2 ${statusesColors[task.status - 1]}`}>
             Status: {statuses[task.status - 1]}
           </p>

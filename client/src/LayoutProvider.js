@@ -41,9 +41,17 @@ export function LayoutProvider({ children }) {
             <div className="relative">
                 {isLoggedIn && (
                     <header className="flex justify-between items-center p-4 bg-blue-500 text-white">
-                        <h1 onClick={ () => navigate('/') } className="text-xl font-bold">Task Manager</h1>
+                        <h1 onClick={ () => navigate('/') } className="text-5xl">Task Manager</h1>
                         <div>
-                            <span>Hola, <strong>{name}</strong> </span>
+                            <div>
+                                <span>Hola, <strong>{name}</strong> </span>
+                                <button
+                                    onClick={() => navigate('/profile')}
+                                    className="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                >
+                                    Edit profile
+                                </button>
+                            </div>
                             <button
                                 onClick={setLogout}
                                 className="px-4 py-2 bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:bg-red-600"

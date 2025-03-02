@@ -8,6 +8,7 @@ import { NotFound } from "./components/NotFound";
 import { LayoutProvider } from "./LayoutProvider";
 import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
+import { Profile } from "./components/Profile";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </LayoutProvider>
